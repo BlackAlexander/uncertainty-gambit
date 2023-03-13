@@ -15,8 +15,13 @@ var keyDownDown: Boolean = false;
 
 var charXspeed: Number = 0;
 var charYspeed: Number = 0;
-var charBspeed: Number = 5; //actual speed
+var charBspeed: Number = 25; //actual speed
 var charDirection: String = "left"; //left or right
+
+var oldTime = 0;
+var newTime = 0;
+
+bg01.gotoAndStop(1);
 
 function main(e: Event) {
 	handleWalking();
@@ -53,23 +58,25 @@ function pressTakeKeys(evt00: KeyboardEvent) {
 }
 
 function handleWalking(){
-	if (keyLeftDown){
+	if (keyLeftDown && handleObstaclesX("left")){
 		charXspeed = charBspeed * (-1);
 		charDirection = "left";
-	} else if (keyRightDown){
+	} else if (keyRightDown && handleObstaclesX("right")){
 		charXspeed = charBspeed;
 		charDirection = "right";
 	} else {
 		charXspeed = 0;
 	}
 
-	if (keyUpDown){
+	if (keyUpDown && handleObstaclesY("up")){
 		charYspeed = charBspeed * (-1);
-	} else if (keyDownDown){
+	} else if (keyDownDown && handleObstaclesY("down")){
 		charYspeed = charBspeed;
 	} else {
 		charYspeed = 0;
 	}
+
+	trace(bg01.x, bg01.y);
 
 	if (charXspeed > 0){
 		mainChar.gotoAndStop(4); // walk to right
@@ -90,11 +97,13 @@ function handleWalking(){
 			}
 		}
 	}
-	trace(charDirection, charXspeed, charYspeed);
 }
 
 function handleBackgroundMovement(){
-	1;
+	if (activeBackground == 1){
+		bg01.x -= charXspeed;
+		bg01.y -= charYspeed;
+	}
 }
 
 function handleWaveDisplay(){
@@ -102,4 +111,36 @@ function handleWaveDisplay(){
 	wavedisplay.waveobject02.gotoAndStop(2);
 	wavedisplay.waveobject03.gotoAndStop(6);
 	wavedisplay.waveobject04.gotoAndStop(1);
+}
+
+function handleObstaclesX(direction: String){
+	if (activeBackground == 1){
+		if (bg01.x + charBspeed >= 1200 && direction == "left"){
+			return false;
+		}
+		if (bg01.x - charBspeed <= 800 && direction == "right"){
+			return false;
+		}
+	}
+	return true;
+}
+	
+function handleObstaclesY(direction: String){
+	if (activeBackground == 1){
+		if (bg01.y + charBspeed >= 850 && direction == "up"){
+			return false;
+		}
+		if (bg01.y - charBspeed <= 0 && direction == "down"){
+			return false;
+		}
+	}
+	return true;
+}
+
+function traceFPS(){
+	newTime = getTimer();
+	if (newTime != oldTime){
+		trace(1000 / (newTime - oldTime));
+	}
+	oldTime = newTime;
 }
