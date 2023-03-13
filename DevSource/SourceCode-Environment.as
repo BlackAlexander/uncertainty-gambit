@@ -21,12 +21,14 @@ var charDirection: String = "left"; //left or right
 var oldTime = 0;
 var newTime = 0;
 
-bg01.gotoAndStop(1);
+var catState: String = "super"; // super/dead/alive
+
 
 function main(e: Event) {
 	handleWalking();
 	handleWaveDisplay();
 	handleBackgroundMovement();
+	handleQuirks();
 }
 
 stage.addEventListener(Event.ENTER_FRAME, main);
@@ -76,8 +78,6 @@ function handleWalking(){
 		charYspeed = 0;
 	}
 
-	trace(bg01.x, bg01.y);
-
 	if (charXspeed > 0){
 		mainChar.gotoAndStop(4); // walk to right
 	} else if (charXspeed < 0){
@@ -107,10 +107,24 @@ function handleBackgroundMovement(){
 }
 
 function handleWaveDisplay(){
-	wavedisplay.waveobject01.gotoAndStop(3);
-	wavedisplay.waveobject02.gotoAndStop(2);
-	wavedisplay.waveobject03.gotoAndStop(6);
+	wavedisplay.waveobject01.gotoAndStop(1);  // 1 - wave   |  2 - cat
+	wavedisplay.waveobject02.gotoAndStop(1);  // 3 - human  |  4 - walkie
+	wavedisplay.waveobject03.gotoAndStop(1);  // 5 - world  |  6 - horse
 	wavedisplay.waveobject04.gotoAndStop(1);
+	if (activeBackground == 1){
+		wavedisplay.waveobject01.gotoAndStop(3);
+		if (catState == "super") {
+			wavedisplay.waveobject02.gotoAndStop(1);
+		} else {
+			wavedisplay.waveobject02.gotoAndStop(2);
+			if (catState == "alive"){
+				wavedisplay.waveobject02.catobj.gotoAndStop(1);
+			}
+			if (catState == "dead"){
+				wavedisplay.waveobject02.catobj.gotoAndStop(2);
+			}
+		}
+	}
 }
 
 function handleObstaclesX(direction: String){
@@ -135,6 +149,43 @@ function handleObstaclesY(direction: String){
 		}
 	}
 	return true;
+}
+
+function handleQuirks(){
+	if (activeBackground == 1){
+		try {
+			quirksbg1();
+		} catch (e: Error){
+			trace("Error in quirk bg01: " + e);
+		}
+	}
+}
+
+function quirksbg1(){
+	if (bg01.y < 575){
+		catState = "super";
+	} else {
+		if (catState == "super"){ // then wave function collapses
+			var randomState: int;
+			randomState = Math.floor(Math.random() * 2);
+			if (randomState){
+				catState = "alive";
+			} else {
+				catState = "dead";
+			}
+		}
+	}
+	if (catState == "super"){
+		bg01.thecat.visible = false;
+	} else {
+		bg01.thecat.visible = true;
+	}
+	if (catState == "alive"){
+		bg01.thecat.gotoAndStop(1);
+	}
+	if (catState == "dead"){
+		bg01.thecat.gotoAndStop(2);
+	}
 }
 
 function traceFPS(){
