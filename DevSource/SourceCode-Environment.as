@@ -106,13 +106,15 @@ function handleBackgroundMovement(){
 	}
 }
 
+
 function handleWaveDisplay(){
-	wavedisplay.waveobject01.gotoAndStop(1);  // 1 - wave   |  2 - cat
-	wavedisplay.waveobject02.gotoAndStop(1);  // 3 - human  |  4 - walkie
-	wavedisplay.waveobject03.gotoAndStop(1);  // 5 - world  |  6 - horse
-	wavedisplay.waveobject04.gotoAndStop(1);
+	// 1 - wave   |  2 - cat
+	// 3 - human  |  4 - walkie
+	// 5 - world  |  6 - horse
 	if (activeBackground == 1){
 		wavedisplay.waveobject01.gotoAndStop(3);
+		wavedisplay.waveobject03.gotoAndStop(1);
+		wavedisplay.waveobject04.gotoAndStop(1);
 		if (catState == "super") {
 			wavedisplay.waveobject02.gotoAndStop(1);
 		} else {
@@ -124,6 +126,13 @@ function handleWaveDisplay(){
 				wavedisplay.waveobject02.catobj.gotoAndStop(2);
 			}
 		}
+	} else if (activeBackground == 2){
+		1;
+	} else {
+		wavedisplay.waveobject01.gotoAndStop(1);
+		wavedisplay.waveobject02.gotoAndStop(1);
+		wavedisplay.waveobject03.gotoAndStop(1);
+		wavedisplay.waveobject04.gotoAndStop(1);
 	}
 }
 
