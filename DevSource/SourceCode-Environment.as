@@ -1,4 +1,6 @@
-﻿mainChar.stop();
+﻿import flash.events.MouseEvent;
+
+mainChar.stop();
 
 var activeBackground: int = 1;
 // 1 - Bathroom
@@ -23,6 +25,9 @@ var newTime = 0;
 
 var catState: String = "super"; // super/dead/alive
 
+actionbubble.gotoAndStop(1);
+aidnotesquantum.visible = false;
+aidnotesdoctor.visible = false;
 
 function main(e: Event) {
 	handleWalking();
@@ -101,8 +106,8 @@ function handleWalking(){
 
 function handleBackgroundMovement(){
 	if (activeBackground == 1){
-		bg01.x -= charXspeed;
-		bg01.y -= charYspeed;
+		thebg.x -= charXspeed;
+		thebg.y -= charYspeed;
 	}
 }
 
@@ -138,10 +143,10 @@ function handleWaveDisplay(){
 
 function handleObstaclesX(direction: String){
 	if (activeBackground == 1){
-		if (bg01.x + charBspeed >= 1200 && direction == "left"){
+		if (thebg.x + charBspeed >= 1200 && direction == "left"){
 			return false;
 		}
-		if (bg01.x - charBspeed <= 800 && direction == "right"){
+		if (thebg.x - charBspeed <= 800 && direction == "right"){
 			return false;
 		}
 	}
@@ -150,10 +155,10 @@ function handleObstaclesX(direction: String){
 	
 function handleObstaclesY(direction: String){
 	if (activeBackground == 1){
-		if (bg01.y + charBspeed >= 850 && direction == "up"){
+		if (thebg.y + charBspeed >= 850 && direction == "up"){
 			return false;
 		}
-		if (bg01.y - charBspeed <= 0 && direction == "down"){
+		if (thebg.y - charBspeed <= 0 && direction == "down"){
 			return false;
 		}
 	}
@@ -171,7 +176,10 @@ function handleQuirks(){
 }
 
 function quirksbg1(){
-	if (bg01.y < 575){
+	if (thebg.currentFrame != 1){
+		return;
+	}
+	if (thebg.y < 575){
 		catState = "super";
 	} else {
 		if (catState == "super"){ // then wave function collapses
@@ -185,15 +193,15 @@ function quirksbg1(){
 		}
 	}
 	if (catState == "super"){
-		bg01.thecat.visible = false;
+		thebg.bg01.thecat.visible = false;
 	} else {
-		bg01.thecat.visible = true;
+		thebg.bg01.thecat.visible = true;
 	}
 	if (catState == "alive"){
-		bg01.thecat.gotoAndStop(1);
+		thebg.bg01.thecat.gotoAndStop(1);
 	}
 	if (catState == "dead"){
-		bg01.thecat.gotoAndStop(2);
+		thebg.bg01.thecat.gotoAndStop(2);
 	}
 }
 
@@ -203,4 +211,20 @@ function traceFPS(){
 		trace(1000 / (newTime - oldTime));
 	}
 	oldTime = newTime;
+}
+
+aidbtndoctor.addEventListener(MouseEvent.CLICK, showAidDoctor);
+function showAidDoctor(event: MouseEvent){
+	aidnotesdoctor.visible = true;
+	if (aidnotesquantum.visible == true){
+		aidnotesquantum.visible = false;
+	}
+}
+
+aidbtnquantum.addEventListener(MouseEvent.CLICK, showAidQuantum);
+function showAidQuantum(event: MouseEvent){
+	aidnotesquantum.visible = true;
+	if (aidnotesdoctor.visible == true){
+		aidnotesdoctor.visible = false;
+	}
 }
