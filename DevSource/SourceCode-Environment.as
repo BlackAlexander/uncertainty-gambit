@@ -5,10 +5,11 @@ mainChar.stop();
 var activeBackground: int = 1;
 // 1 - Bathroom
 // 2 - Stall
-// 3 - Hallway
-// 4 - Horse track
-// 5 - Bet room
-// 6 - Public
+// 3 - Office
+// 4 - Hallway
+// 5 - Horse track
+// 6 - Bet room
+// 7 - Public
 
 var keyLeftDown: Boolean = false;
 var keyRightDown: Boolean = false;
@@ -23,7 +24,9 @@ var charDirection: String = "left"; //left or right
 var oldTime = 0;
 var newTime = 0;
 
-changeBackgroundTo(2);
+var powerIsOn: Boolean = true;
+
+changeBackgroundTo(4); // starts in stall (2)
 
 var catState: String = "super"; // super/dead/alive
 
@@ -32,6 +35,9 @@ aidnotesquantum.visible = false;
 aidnotesdoctor.visible = false;
 
 function main(e: Event) {
+	if (currentFrame != 3){
+		return;
+	}
 	handleWalking();
 	handleWaveDisplay();
 	handleBackgroundMovement();
@@ -111,14 +117,8 @@ function handleWalking(){
 }
 
 function handleBackgroundMovement(){
-	if (activeBackground == 1){
-		thebg.x -= charXspeed;
-		thebg.y -= charYspeed;
-	}
-	if (activeBackground == 2){
-		thebg.x -= charXspeed;
-		thebg.y -= charYspeed;
-	}
+	thebg.x -= charXspeed;
+	thebg.y -= charYspeed;
 }
 
 
@@ -146,6 +146,11 @@ function handleWaveDisplay(){
 		wavedisplay.waveobject02.gotoAndStop(1);
 		wavedisplay.waveobject03.gotoAndStop(1);
 		wavedisplay.waveobject04.gotoAndStop(1);
+	} else if (activeBackground == 4){
+		wavedisplay.waveobject01.gotoAndStop(3);
+		wavedisplay.waveobject02.gotoAndStop(1);
+		wavedisplay.waveobject03.gotoAndStop(1);
+		wavedisplay.waveobject04.gotoAndStop(1);
 	} else {
 		wavedisplay.waveobject01.gotoAndStop(1);
 		wavedisplay.waveobject02.gotoAndStop(1);
@@ -163,12 +168,19 @@ function handleObstaclesX(direction: String){
 			return false;
 		}
 	}
-
 	if (activeBackground == 2){
 		if (thebg.x + charBspeed >= 1200 && direction == "left"){
 			return false;
 		}
 		if (thebg.x - charBspeed <= 1100 && direction == "right"){
+			return false;
+		}
+	}
+	if (activeBackground == 4){
+		if (thebg.x + charBspeed >= 4318 && direction == "left"){
+			return false;
+		}
+		if (thebg.x - charBspeed <= -2380 && direction == "right"){
 			return false;
 		}
 	}
@@ -192,6 +204,14 @@ function handleObstaclesY(direction: String){
 			return false;
 		}
 	}
+	if (activeBackground == 4){
+		if (thebg.y + charBspeed >= 727 && direction == "up"){
+			return false;
+		}
+		if (thebg.y - charBspeed <= 386 && direction == "down"){
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -201,6 +221,13 @@ function handleQuirks(){
 			quirksbg1();
 		} catch (e: Error){
 			trace("Error in quirk bg01: " + e);
+		}
+	}
+	if (activeBackground == 4){
+		try {
+			quirksbg4();
+		} catch (e: Error){
+			trace("Error in quirk bg04: " + e);
 		}
 	}
 }
@@ -232,6 +259,17 @@ function quirksbg1(){
 	}
 	if (catState == "dead"){
 		thebg.bg01.thecat.gotoAndStop(2);
+	}
+}
+
+function quirksbg4(){
+	if (thebg.currentFrame != 4){
+		return;
+	}
+	if (powerIsOn){
+		thebg.bg04.electricpanel.gotoAndStop(1);
+	} else {
+		thebg.bg04.electricpanel.gotoAndStop(2);
 	}
 }
 
@@ -272,6 +310,7 @@ function changeBackgroundTo(newBackground: int){
 		thebg.height = 5000;
 		mainChar.width = 250;
 		mainChar.height = 500;
+		charBspeed = 25;
 	}
 	if (newBackground == 2){
 		thebg.x = 1175;
@@ -280,6 +319,25 @@ function changeBackgroundTo(newBackground: int){
 		mainChar.height = 600;
 		thebg.width = 2800;
 		thebg.height = 2800;
+		charBspeed = 25;
+	}
+	if (newBackground == 3){
+		thebg.x = 1000;
+		thebg.y = 500;
+		thebg.width = 5000;
+		thebg.height = 5000;
+		mainChar.width = 250;
+		mainChar.height = 500;
+		charBspeed = 25;
+	}
+	if (newBackground == 4){
+		thebg.x = 2250;
+		thebg.y = 650;
+		thebg.width = 11000;
+		thebg.height = 11000;
+		mainChar.width = 80;
+		mainChar.height = 160;
+		charBspeed = 11;
 	}
 }
 
@@ -289,13 +347,41 @@ function handleActionBubble(){
 		if (thebg.x >= 825 && thebg.x <= 925 && thebg.y >= 475 && thebg.y <= 750){
 			actionbubble.gotoAndStop(2);
 		}
+		if (thebg.y <= 150){
+			actionbubble.gotoAndStop(4);
+		}
 	}
 	if (activeBackground == 2){
 		actionbubble.gotoAndStop(3);
 	}
+	if (activeBackground == 4){
+		actionbubble.gotoAndStop(1);
+		if (thebg.x >= 2129 && thebg.x <= 2360 && thebg.y >= 670){
+			actionbubble.gotoAndStop(5);
+		}
+		if (thebg.x >= 864 && thebg.x <= 1062 && thebg.y <= 485){
+			actionbubble.gotoAndStop(6);
+		}
+		if (thebg.x <= -2238){
+			actionbubble.gotoAndStop(14);
+		}
+		if (thebg.x >= 4200 && powerIsOn){
+			actionbubble.gotoAndStop(13);
+		}
+		if (thebg.x >= 3955 && thebg.x <= 4040 && thebg.y >= 628){
+			if (powerIsOn){
+				actionbubble.gotoAndStop(11);
+			} else {
+				actionbubble.gotoAndStop(12);
+			}
+		}
+	}
 }
 
 function executeActionBubble(){
+	if (currentFrame != 3){
+		return;
+	}
 	if (actionbubble.currentFrame == 1){
 		1;
 	}
@@ -306,6 +392,18 @@ function executeActionBubble(){
 		changeBackgroundTo(1);
 	}
 	if (actionbubble.currentFrame == 4){
-		1;
+		changeBackgroundTo(4);
+	}
+	if (actionbubble.currentFrame == 5){
+		changeBackgroundTo(1);
+	}
+	if (actionbubble.currentFrame == 6){
+		changeBackgroundTo(3);
+	}
+	if (actionbubble.currentFrame == 11){
+		powerIsOn = false;
+	}
+	if (actionbubble.currentFrame == 12){
+		powerIsOn = true;
 	}
 }
