@@ -38,6 +38,7 @@ aidnotesstolen.visible = false;
 aidbtnstolen.visible = false;
 thewatch.visible = false;
 watchshowbtn.visible = true;
+theentrypanel.visible = false;
 
 function main(e: Event) {
 	if (currentFrame != 3){
@@ -298,6 +299,9 @@ function quirksbg4(){
 	} else {
 		thebg.bg04.electricpanel.gotoAndStop(2);
 	}
+	if (thebg.x < 4200){
+		theentrypanel.visible = false;
+	}
 }
 
 function traceFPS(){
@@ -517,6 +521,9 @@ function executeActionBubble(){
 	}
 	if (actionbubble.currentFrame == 12){
 		powerIsOn = true;
+	}
+	if (actionbubble.currentFrame == 13){
+		theentrypanel.visible = true;
 	}
 }
 
