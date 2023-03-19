@@ -28,6 +28,7 @@ var powerIsOn: Boolean = false;
 var notesStolen: Boolean = false;
 var walkieStolen: Boolean = false;
 var walkieConnected: Boolean = false;
+var systemsHacked: Boolean = false;
 
 changeBackgroundTo(2); // starts in stall (2)
 
@@ -473,7 +474,7 @@ function handleActionBubble(){
 		if (thebg.x >= 1025 && thebg.y <= 450 && walkieStolen == false){
 			actionbubble.gotoAndStop(9);
 		}
-		if (thebg.x <= 1025 && thebg.x >= 900 && thebg.y >= 725 && powerIsOn){
+		if (thebg.x <= 1025 && thebg.x >= 900 && thebg.y >= 725 && powerIsOn && !systemsHacked){
 			actionbubble.gotoAndStop(10);
 		}
 	}
@@ -539,6 +540,9 @@ function executeActionBubble(){
 		if (thebg.currentFrame == 3){
 			thebg.bg03.stealableWalkie.visible = false;
 		}
+	}
+	if (actionbubble.currentFrame == 10 && !systemsHacked){
+		systemsHacked = true;
 	}
 	if (actionbubble.currentFrame == 11){
 		powerIsOn = false;
