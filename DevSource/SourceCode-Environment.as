@@ -26,6 +26,8 @@ var newTime = 0;
 
 var powerIsOn: Boolean = false;
 var notesStolen: Boolean = false;
+var walkieStolen: Boolean = false;
+var walkieConnected: Boolean = false;
 
 changeBackgroundTo(2); // starts in stall (2)
 
@@ -39,6 +41,8 @@ aidbtnstolen.visible = false;
 thewatch.visible = false;
 watchshowbtn.visible = true;
 theentrypanel.visible = false;
+thewalkie.visible = false;
+walkiebtn.visible = false;
 
 function main(e: Event) {
 	if (currentFrame != 3){
@@ -371,6 +375,18 @@ function showthewatch(event: MouseEvent){
 		aidnotesstolen.visible = false;
 	}
 }
+walkiebtn.addEventListener(MouseEvent.CLICK, enablewalkie);
+function enablewalkie(event: MouseEvent){
+	thewalkie.visible = true;
+	thewalkie.gotoAndPlay(1);
+	thewalkie.walkiewaves.visible = walkieConnected;
+}
+thewalkie.buttonMode = true;
+thewalkie.addEventListener(MouseEvent.CLICK, enablewalkie);
+function endWalkiePressed(){
+	thewalkie.gotoAndStop(1);
+	thewalkie.visible = false;
+}
 
 function changeBackgroundTo(newBackground: int){
 	var oldBackground: int = activeBackground;
@@ -406,6 +422,7 @@ function changeBackgroundTo(newBackground: int){
 		mainChar.height = 400;
 		charBspeed = 20;
 		thebg.bg03.stealableNotes.visible = !notesStolen;
+		thebg.bg03.stealableWalkie.visible = !walkieStolen;
 	}
 	if (newBackground == 4){
 		thebg.width = 11000;
@@ -453,7 +470,7 @@ function handleActionBubble(){
 		if (thebg.x <= 750 && thebg.y >= 675 && notesStolen == false){
 			actionbubble.gotoAndStop(8);
 		}
-		if (thebg.x >= 1025 && thebg.y <= 450){
+		if (thebg.x >= 1025 && thebg.y <= 450 && walkieStolen == false){
 			actionbubble.gotoAndStop(9);
 		}
 		if (thebg.x <= 1025 && thebg.x >= 900 && thebg.y >= 725 && powerIsOn){
@@ -514,6 +531,13 @@ function executeActionBubble(){
 		aidbtnstolen.visible = true;
 		if (thebg.currentFrame == 3){
 			thebg.bg03.stealableNotes.visible = false;
+		}
+	}
+	if (actionbubble.currentFrame == 9 && walkieStolen == false){
+		walkieStolen = true;
+		walkiebtn.visible = true;
+		if (thebg.currentFrame == 3){
+			thebg.bg03.stealableWalkie.visible = false;
 		}
 	}
 	if (actionbubble.currentFrame == 11){
