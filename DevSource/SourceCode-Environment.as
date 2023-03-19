@@ -36,6 +36,8 @@ aidnotesquantum.visible = false;
 aidnotesdoctor.visible = false;
 aidnotesstolen.visible = false;
 aidbtnstolen.visible = false;
+thewatch.visible = false;
+watchshowbtn.visible = true;
 
 function main(e: Event) {
 	if (currentFrame != 3){
@@ -46,6 +48,7 @@ function main(e: Event) {
 	handleBackgroundMovement();
 	handleQuirks();
 	handleActionBubble();
+	handleTimeDisplay();
 	trace(thebg.x, thebg.y);
 }
 
@@ -314,6 +317,10 @@ function showAidDoctor(event: MouseEvent){
 	if (aidnotesstolen.visible){
 		aidnotesstolen.visible = false;
 	}
+	if (thewatch.visible){
+		thewatch.visible = false;
+		watchshowbtn.visible = true;
+	}
 }
 
 aidbtnquantum.addEventListener(MouseEvent.CLICK, showAidQuantum);
@@ -325,6 +332,10 @@ function showAidQuantum(event: MouseEvent){
 	if (aidnotesstolen.visible){
 		aidnotesstolen.visible = false;
 	}
+	if (thewatch.visible){
+		thewatch.visible = false;
+		watchshowbtn.visible = true;
+	}
 }
 
 aidbtnstolen.addEventListener(MouseEvent.CLICK, showAidStolen);
@@ -335,6 +346,25 @@ function showAidStolen(event: MouseEvent){
 	}
 	if (aidnotesquantum.visible){
 		aidnotesquantum.visible = false;
+	}
+	if (thewatch.visible){
+		thewatch.visible = false;
+		watchshowbtn.visible = true;
+	}
+}
+
+watchshowbtn.addEventListener(MouseEvent.CLICK, showthewatch);
+function showthewatch(event: MouseEvent){
+	thewatch.visible = true;
+	watchshowbtn.visible = false;
+	if (aidnotesdoctor.visible){
+		aidnotesdoctor.visible = false;
+	}
+	if (aidnotesquantum.visible){
+		aidnotesquantum.visible = false;
+	}
+	if (aidnotesstolen.visible){
+		aidnotesstolen.visible = false;
 	}
 }
 
@@ -489,3 +519,35 @@ function executeActionBubble(){
 		powerIsOn = true;
 	}
 }
+
+function handleTimeDisplay(){
+	if (currentFrame != 3 || thewatch.visible == false){
+		return;
+	}
+	var currentTime: int = int(getTimer());
+	var numberOfSeconds: int;
+	var numberOfMinutes: int;
+	numberOfSeconds = currentTime / 1000;
+	numberOfMinutes = numberOfSeconds / 60;
+	numberOfMinutes += 8;
+	numberOfSeconds = numberOfSeconds % 60;
+	thewatch.watchtimehour.text = "12:" + String(numberOfMinutes);
+	thewatch.watchtimeseconds.text = String(numberOfSeconds);
+	if (numberOfMinutes < 10){
+		thewatch.watchtimehour.text = "12:0" + String(numberOfMinutes);
+	}
+	if (numberOfSeconds < 10){
+		thewatch.watchtimeseconds.text = "0" + String(numberOfSeconds);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
