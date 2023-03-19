@@ -24,7 +24,8 @@ var charDirection: String = "left"; //left or right
 var oldTime = 0;
 var newTime = 0;
 
-var powerIsOn: Boolean = true;
+var powerIsOn: Boolean = false;
+var notesStolen: Boolean = false;
 
 changeBackgroundTo(2); // starts in stall (2)
 
@@ -33,6 +34,8 @@ var catState: String = "super"; // super/dead/alive
 actionbubble.gotoAndStop(1);
 aidnotesquantum.visible = false;
 aidnotesdoctor.visible = false;
+aidnotesstolen.visible = false;
+aidbtnstolen.visible = false;
 
 function main(e: Event) {
 	if (currentFrame != 3){
@@ -305,16 +308,33 @@ function traceFPS(){
 aidbtndoctor.addEventListener(MouseEvent.CLICK, showAidDoctor);
 function showAidDoctor(event: MouseEvent){
 	aidnotesdoctor.visible = true;
-	if (aidnotesquantum.visible == true){
+	if (aidnotesquantum.visible){
 		aidnotesquantum.visible = false;
+	}
+	if (aidnotesstolen.visible){
+		aidnotesstolen.visible = false;
 	}
 }
 
 aidbtnquantum.addEventListener(MouseEvent.CLICK, showAidQuantum);
 function showAidQuantum(event: MouseEvent){
 	aidnotesquantum.visible = true;
-	if (aidnotesdoctor.visible == true){
+	if (aidnotesdoctor.visible){
 		aidnotesdoctor.visible = false;
+	}
+	if (aidnotesstolen.visible){
+		aidnotesstolen.visible = false;
+	}
+}
+
+aidbtnstolen.addEventListener(MouseEvent.CLICK, showAidStolen);
+function showAidStolen(event: MouseEvent){
+	aidnotesstolen.visible = true;
+	if (aidnotesdoctor.visible){
+		aidnotesdoctor.visible = false;
+	}
+	if (aidnotesquantum.visible){
+		aidnotesquantum.visible = false;
 	}
 }
 
@@ -351,6 +371,7 @@ function changeBackgroundTo(newBackground: int){
 		mainChar.width = 200;
 		mainChar.height = 400;
 		charBspeed = 20;
+		thebg.bg03.stealableNotes.visible = !notesStolen;
 	}
 	if (newBackground == 4){
 		thebg.width = 11000;
@@ -395,13 +416,13 @@ function handleActionBubble(){
 		if (thebg.x <= 675 && thebg.y <= 600){
 			actionbubble.gotoAndStop(7);
 		}
-		if (thebg.x <= 750 && thebg.y >= 675){
+		if (thebg.x <= 750 && thebg.y >= 675 && notesStolen == false){
 			actionbubble.gotoAndStop(8);
 		}
 		if (thebg.x >= 1025 && thebg.y <= 450){
 			actionbubble.gotoAndStop(9);
 		}
-		if (thebg.x <= 1025 && thebg.x >= 900 && thebg.y >= 725){
+		if (thebg.x <= 1025 && thebg.x >= 900 && thebg.y >= 725 && powerIsOn){
 			actionbubble.gotoAndStop(10);
 		}
 	}
@@ -453,6 +474,13 @@ function executeActionBubble(){
 	}
 	if (actionbubble.currentFrame == 7){
 		changeBackgroundTo(4);
+	}
+	if (actionbubble.currentFrame == 8 && notesStolen == false){
+		notesStolen = true;
+		aidbtnstolen.visible = true;
+		if (thebg.currentFrame == 3){
+			thebg.bg03.stealableNotes.visible = false;
+		}
 	}
 	if (actionbubble.currentFrame == 11){
 		powerIsOn = false;
