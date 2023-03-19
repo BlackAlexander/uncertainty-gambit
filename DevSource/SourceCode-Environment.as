@@ -26,7 +26,7 @@ var newTime = 0;
 
 var powerIsOn: Boolean = true;
 
-changeBackgroundTo(4); // starts in stall (2)
+changeBackgroundTo(2); // starts in stall (2)
 
 var catState: String = "super"; // super/dead/alive
 
@@ -146,6 +146,11 @@ function handleWaveDisplay(){
 		wavedisplay.waveobject02.gotoAndStop(1);
 		wavedisplay.waveobject03.gotoAndStop(1);
 		wavedisplay.waveobject04.gotoAndStop(1);
+	} else if (activeBackground == 3){
+		wavedisplay.waveobject01.gotoAndStop(3);
+		wavedisplay.waveobject02.gotoAndStop(1);
+		wavedisplay.waveobject03.gotoAndStop(1);
+		wavedisplay.waveobject04.gotoAndStop(1);
 	} else if (activeBackground == 4){
 		wavedisplay.waveobject01.gotoAndStop(3);
 		wavedisplay.waveobject02.gotoAndStop(1);
@@ -176,6 +181,14 @@ function handleObstaclesX(direction: String){
 			return false;
 		}
 	}
+	if (activeBackground == 3){
+		if (thebg.x + charBspeed >= 1075 && direction == "left"){
+			return false;
+		}
+		if (thebg.x - charBspeed <= 600 && direction == "right"){
+			return false;
+		}
+	}
 	if (activeBackground == 4){
 		if (thebg.x + charBspeed >= 4318 && direction == "left"){
 			return false;
@@ -201,6 +214,14 @@ function handleObstaclesY(direction: String){
 			return false;
 		}
 		if (thebg.y - charBspeed <= 400 && direction == "down"){
+			return false;
+		}
+	}
+	if (activeBackground == 3){
+		if (thebg.y + charBspeed >= 750 && direction == "up"){
+			return false;
+		}
+		if (thebg.y - charBspeed <= 300 && direction == "down"){
 			return false;
 		}
 	}
@@ -298,6 +319,7 @@ function showAidQuantum(event: MouseEvent){
 }
 
 function changeBackgroundTo(newBackground: int){
+	var oldBackground: int = activeBackground;
 	thebg.gotoAndStop(newBackground);
 	activeBackground = newBackground;
 	actionbubble.gotoAndStop(1);
@@ -322,22 +344,36 @@ function changeBackgroundTo(newBackground: int){
 		charBspeed = 25;
 	}
 	if (newBackground == 3){
-		thebg.x = 1000;
-		thebg.y = 500;
-		thebg.width = 5000;
-		thebg.height = 5000;
-		mainChar.width = 250;
-		mainChar.height = 500;
-		charBspeed = 25;
+		thebg.x = 775;
+		thebg.y = 375;
+		thebg.width = 3000;
+		thebg.height = 3000;
+		mainChar.width = 200;
+		mainChar.height = 400;
+		charBspeed = 20;
 	}
 	if (newBackground == 4){
-		thebg.x = 2250;
-		thebg.y = 650;
 		thebg.width = 11000;
 		thebg.height = 11000;
 		mainChar.width = 80;
 		mainChar.height = 160;
 		charBspeed = 11;
+		if (oldBackground == 1){ // from bathroom
+			thebg.x = 2250;
+			thebg.y = 650;
+		}
+		if (oldBackground == 3){ // from office
+			thebg.x = 952;
+			thebg.y = 551;
+		}
+		if (oldBackground == 5){ // from racetrack
+			thebg.x = 4153;
+			thebg.y = 573;
+		}
+		if (oldBackground == 6){ // from bet room
+			thebg.x = -2205;
+			thebg.y = 573;
+		}
 	}
 }
 
@@ -353,6 +389,21 @@ function handleActionBubble(){
 	}
 	if (activeBackground == 2){
 		actionbubble.gotoAndStop(3);
+	}
+	if (activeBackground == 3){
+		actionbubble.gotoAndStop(1);
+		if (thebg.x <= 675 && thebg.y <= 600){
+			actionbubble.gotoAndStop(7);
+		}
+		if (thebg.x <= 750 && thebg.y >= 675){
+			actionbubble.gotoAndStop(8);
+		}
+		if (thebg.x >= 1025 && thebg.y <= 450){
+			actionbubble.gotoAndStop(9);
+		}
+		if (thebg.x <= 1025 && thebg.x >= 900 && thebg.y >= 725){
+			actionbubble.gotoAndStop(10);
+		}
 	}
 	if (activeBackground == 4){
 		actionbubble.gotoAndStop(1);
@@ -399,6 +450,9 @@ function executeActionBubble(){
 	}
 	if (actionbubble.currentFrame == 6){
 		changeBackgroundTo(3);
+	}
+	if (actionbubble.currentFrame == 7){
+		changeBackgroundTo(4);
 	}
 	if (actionbubble.currentFrame == 11){
 		powerIsOn = false;
