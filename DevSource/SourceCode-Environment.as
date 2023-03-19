@@ -30,7 +30,7 @@ var walkieStolen: Boolean = false;
 var walkieConnected: Boolean = false;
 var systemsHacked: Boolean = false;
 
-changeBackgroundTo(2); // starts in stall (2)
+changeBackgroundTo(5); // starts in stall (2)
 
 var catState: String = "super"; // super/dead/alive
 
@@ -168,6 +168,11 @@ function handleWaveDisplay(){
 		wavedisplay.waveobject02.gotoAndStop(1);
 		wavedisplay.waveobject03.gotoAndStop(1);
 		wavedisplay.waveobject04.gotoAndStop(1);
+	} else if (activeBackground == 5){ // TODO: implement
+		wavedisplay.waveobject01.gotoAndStop(3);
+		wavedisplay.waveobject02.gotoAndStop(6);
+		wavedisplay.waveobject03.gotoAndStop(1);
+		wavedisplay.waveobject04.gotoAndStop(1);
 	} else {
 		wavedisplay.waveobject01.gotoAndStop(1);
 		wavedisplay.waveobject02.gotoAndStop(1);
@@ -209,6 +214,14 @@ function handleObstaclesX(direction: String){
 			return false;
 		}
 	}
+	if (activeBackground == 5){
+		if (thebg.x + charBspeed >= 10000 && direction == "left"){
+			return false;
+		}
+		if (thebg.x - charBspeed <= -10000 && direction == "right"){
+			return false;
+		}
+	}
 	return true;
 }
 	
@@ -245,6 +258,14 @@ function handleObstaclesY(direction: String){
 			return false;
 		}
 	}
+	if (activeBackground == 5){
+		if (thebg.y + charBspeed >= 10000 && direction == "up"){
+			return false;
+		}
+		if (thebg.y - charBspeed <= -10000 && direction == "down"){
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -261,6 +282,13 @@ function handleQuirks(){
 			quirksbg4();
 		} catch (e: Error){
 			trace("Error in quirk bg04: " + e);
+		}
+	}
+	if (activeBackground == 5){
+		try {
+			quirksbg5();
+		} catch (e: Error){
+			trace("Error in quirk bg05: " + e);
 		}
 	}
 }
@@ -306,6 +334,12 @@ function quirksbg4(){
 	}
 	if (thebg.x < 4200){
 		theentrypanel.visible = false;
+	}
+}
+
+function quirksbg5(){
+	if (thebg.currentFrame != 5){
+		return;
 	}
 }
 
@@ -396,6 +430,8 @@ function changeBackgroundTo(newBackground: int){
 	actionbubble.gotoAndStop(1);
 	mainChar.gotoAndStop(1);
 	mainChar.guyinside.gotoAndPlay(1);
+	mainChar.x = 980;
+	mainChar.y = 550;
 	if (newBackground == 1){
 		thebg.x = 1000;
 		thebg.y = 500;
@@ -446,6 +482,20 @@ function changeBackgroundTo(newBackground: int){
 		if (oldBackground == 6){ // from bet room
 			thebg.x = -2205;
 			thebg.y = 573;
+		}
+	}
+	if (newBackground == 5){
+		thebg.x = 1074;
+		thebg.y = 538;
+		thebg.width = 6000;
+		thebg.height = 6000;
+		mainChar.width = 100;
+		mainChar.height = 200;
+		mainChar.x = 1480;
+		mainChar.y = 550;
+		charBspeed = 18;
+		if (thebg.currentFrame == 5){
+			thebg.bg05.gotoAndStop(1);
 		}
 	}
 }
