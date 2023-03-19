@@ -353,6 +353,9 @@ function quirksbg5(){
 	if (thebg.currentFrame != 5){
 		return;
 	}
+	if (thebg.y >= 2600){
+		thebg.y = thebg.y - 900;
+	}
 }
 
 function traceFPS(){
