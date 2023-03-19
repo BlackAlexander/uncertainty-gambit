@@ -215,10 +215,16 @@ function handleObstaclesX(direction: String){
 		}
 	}
 	if (activeBackground == 5){
-		if (thebg.x + charBspeed >= 10000 && direction == "left"){
+		if (thebg.x + charBspeed >= 1200 && direction == "left"){
 			return false;
 		}
-		if (thebg.x - charBspeed <= -10000 && direction == "right"){
+		if (thebg.x - charBspeed <= 1000 && direction == "right" && thebg.y >= 610){
+			return false;
+		}
+		if (thebg.x - charBspeed <= 965 && direction == "right" && thebg.y < 610){
+			return false;
+		}
+		if (thebg.x - charBspeed >= 1000 && direction == "left" && thebg.y <= 502){
 			return false;
 		}
 	}
@@ -259,10 +265,16 @@ function handleObstaclesY(direction: String){
 		}
 	}
 	if (activeBackground == 5){
-		if (thebg.y + charBspeed >= 10000 && direction == "up"){
+		if (thebg.y + charBspeed >= 2950 && direction == "up"){
 			return false;
 		}
-		if (thebg.y - charBspeed <= -10000 && direction == "down"){
+		if (thebg.y + charBspeed >= 610 && direction == "up" && thebg.x <= 990){
+			return false;
+		}
+		if (thebg.y - charBspeed <= 124 && direction == "down"){
+			return false;
+		}
+		if (thebg.y - charBspeed <= 502 && direction == "down" && thebg.x >= 1030){
 			return false;
 		}
 	}
