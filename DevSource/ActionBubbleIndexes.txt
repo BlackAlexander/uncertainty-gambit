@@ -9,9 +9,9 @@
  9 - steal radio
 10 - hack system
 11 - turn off power
-12 - turn on power
+12 - turn on powerv
 13 - access the tracks
 14 - leave premises
 15 - leave the tracks
-16 - 
+16 - connect radio
 17 - 

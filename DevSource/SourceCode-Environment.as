@@ -565,6 +565,15 @@ function handleActionBubble(){
 			}
 		}
 	}
+	if (activeBackground == 5){
+		actionbubble.gotoAndStop(1);
+		if (thebg.x <= 1038 && thebg.y <= 934 && thebg.y >= 664){
+			actionbubble.gotoAndStop(15);
+		}
+		if (thebg.y <= 250 && walkieStolen && !walkieConnected){
+			actionbubble.gotoAndStop(16);
+		}
+	}
 }
 
 function executeActionBubble(){
@@ -617,6 +626,12 @@ function executeActionBubble(){
 	}
 	if (actionbubble.currentFrame == 13){
 		theentrypanel.visible = true;
+	}
+	if (actionbubble.currentFrame == 15){
+		changeBackgroundTo(4);
+	}
+	if (actionbubble.currentFrame == 16){
+		walkieConnected = true;
 	}
 }
 
