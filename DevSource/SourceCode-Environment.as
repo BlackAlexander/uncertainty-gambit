@@ -32,10 +32,19 @@ var walkieStolen: Boolean = false;
 var walkieConnected: Boolean = false;
 var systemsHacked: Boolean = false;
 
-changeBackgroundTo(6); // starts in stall (2)
+changeBackgroundTo(2); // starts in stall (2)
 
 var catState: String = "super"; // super/dead/alive
 var winnerHorse: int = 0; // 0 means we don't know who won
+var endState: int = 0;
+// 0 - nothing yet
+// 1 - pressed exit
+// 2 - left building
+// 3 - rightfully won
+// 4 - won but didn't disable security
+// 5 - lost, bet on wrong horse
+// 6 - race track uncovered with player on it
+// 7 - didn't place bet on time
 
 actionbubble.gotoAndStop(1);
 aidnotesquantum.visible = false;
@@ -48,6 +57,8 @@ theentrypanel.visible = false;
 thewalkie.visible = false;
 walkiebtn.visible = false;
 betpanel.visible = false;
+theendtween.gotoAndStop(1);
+theendtween.visible = false;
 
 function main(e: Event) {
 	if (currentFrame != 3) return;
@@ -811,7 +822,9 @@ function betwasplaced(chosenHorse: int){
 	trace(chosenHorse);
 }
 
-
+function triggerEnding(){
+	//gotoAndStop(4);
+}
 
 
 
