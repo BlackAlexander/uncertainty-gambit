@@ -14,4 +14,6 @@
 14 - leave premises
 15 - leave the tracks
 16 - connect radio
-17 - 
+17 - enter hallway
+18 - place the bet
+19 - leave the building

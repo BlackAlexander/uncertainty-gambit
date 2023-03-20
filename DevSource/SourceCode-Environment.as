@@ -32,7 +32,7 @@ var walkieStolen: Boolean = false;
 var walkieConnected: Boolean = false;
 var systemsHacked: Boolean = false;
 
-changeBackgroundTo(2); // starts in stall (2)
+changeBackgroundTo(6); // starts in stall (2)
 
 var catState: String = "super"; // super/dead/alive
 var winnerHorse: int = 0; // 0 means we don't know who won
@@ -47,6 +47,7 @@ watchshowbtn.visible = true;
 theentrypanel.visible = false;
 thewalkie.visible = false;
 walkiebtn.visible = false;
+betpanel.visible = false;
 
 function main(e: Event) {
 	if (currentFrame != 3) return;
@@ -195,7 +196,7 @@ function handleWaveDisplay(){
 			wavedisplay.waveobject03.gotoAndStop(1);
 			wavedisplay.waveobject04.gotoAndStop(1);
 		}
-	} else if (activeBackground == 5){ // TODO: implement
+	} else if (activeBackground == 5){
 		wavedisplay.waveobject02.gotoAndStop(1);
 		if (walkieConnected) {
 			wavedisplay.waveobject03.gotoAndStop(4);
@@ -209,6 +210,17 @@ function handleWaveDisplay(){
 			wavedisplay.waveobject03.gotoAndStop(4);
 		} else {
 			wavedisplay.waveobject03.gotoAndStop(1);
+		}
+	} else if (activeBackground == 6){
+		wavedisplay.waveobject02.gotoAndStop(1);
+		if (walkieConnected){
+			wavedisplay.waveobject03.gotoAndStop(4);
+			wavedisplay.waveobject04.gotoAndStop(6);
+			wavedisplay.waveobject04.insidehorse.gotoAndStop(winnerHorse);
+			if (winnerHorse == 0) wavedisplay.waveobject04.insidehorse.gotoAndStop(15);
+		} else {
+			wavedisplay.waveobject03.gotoAndStop(1);
+			wavedisplay.waveobject04.gotoAndStop(1);
 		}
 	} else {
 		wavedisplay.waveobject01.gotoAndStop(1);
@@ -265,6 +277,14 @@ function handleObstaclesX(direction: String){
 			return false;
 		}
 	}
+	if (activeBackground == 6){
+		if (thebg.x + charBspeed >= 2000 && direction == "left"){
+			return false;
+		}
+		if (thebg.x - charBspeed <= 595 && direction == "right"){
+			return false;
+		}
+	}
 	return true;
 }
 	
@@ -315,6 +335,14 @@ function handleObstaclesY(direction: String){
 			return false;
 		}
 	}
+	if (activeBackground == 6){
+		if (thebg.y + charBspeed >= 675 && direction == "up"){
+			return false;
+		}
+		if (thebg.y - charBspeed <= 300 && direction == "down"){
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -338,6 +366,13 @@ function handleQuirks(){
 			quirksbg5();
 		} catch (e: Error){
 			trace("Error in quirk bg05: " + e);
+		}
+	}
+	if (activeBackground == 6){
+		try {
+			quirksbg6();
+		} catch (e: Error){
+			trace("Error in quirk bg06: " + e);
 		}
 	}
 }
@@ -401,6 +436,15 @@ function quirksbg5(){
 		winnerHorse = Math.floor(Math.random() * 14) + 1;
 		thebg.bg05.gotoAndPlay(2);
 		thebg.bg05.thehorse.horsepanel.winnernumber.text = String(winnerHorse);
+	}
+}
+
+function quirksbg6(){
+	if (thebg.currentFrame != 6){
+		return;
+	}
+	if (thebg.x > 900){
+		betpanel.visible = false;
 	}
 }
 
@@ -583,6 +627,15 @@ function changeBackgroundTo(newBackground: int){
 			}
 		}
 	}
+	if (newBackground == 6){
+		thebg.x = 1315;
+		thebg.y = 355;
+		thebg.width = 6000;
+		thebg.height = 6000;
+		mainChar.width = 250;
+		mainChar.height = 500;
+		charBspeed = 20;
+	}
 }
 
 function handleActionBubble(){
@@ -644,6 +697,18 @@ function handleActionBubble(){
 			actionbubble.gotoAndStop(16);
 		}
 	}
+	if (activeBackground == 6){
+		actionbubble.gotoAndStop(1);
+		if(thebg.x >= 1200 && thebg.x <= 1650 && thebg.y >= 550){
+			actionbubble.gotoAndStop(17);
+		}
+		if (thebg.x <= 800 && thebg.y <= 600){
+			actionbubble.gotoAndStop(18);
+		}
+		if (thebg.x >= 1800){
+			actionbubble.gotoAndStop(19);
+		}
+	}
 }
 
 function executeActionBubble(){
@@ -697,6 +762,9 @@ function executeActionBubble(){
 	if (actionbubble.currentFrame == 13){
 		theentrypanel.visible = true;
 	}
+	if (actionbubble.currentFrame == 14){
+		changeBackgroundTo(6);
+	}
 	if (actionbubble.currentFrame == 15){
 		changeBackgroundTo(4);
 	}
@@ -705,6 +773,15 @@ function executeActionBubble(){
 		thewalkie.visible = true;
 		thewalkie.gotoAndPlay(1);
 		thewalkie.walkiewaves.visible = walkieConnected;
+	}
+	if (actionbubble.currentFrame == 17){
+		changeBackgroundTo(4);
+	}
+	if (actionbubble.currentFrame == 18){
+		betpanel.visible = true;
+	}
+	if (actionbubble.currentFrame == 19){
+		//leave forever
 	}
 }
 
@@ -730,9 +807,9 @@ function handleTimeDisplay(){
 	}
 }
 
-
-
-
+function betwasplaced(chosenHorse: int){
+	trace(chosenHorse);
+}
 
 
 
