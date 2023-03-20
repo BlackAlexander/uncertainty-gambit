@@ -11,5 +11,13 @@ function pressHorseP(event: MouseEvent){
 	btnhorseticketP.visible = false;
 	horseticketP.gotoAndStop(2);
 	horseticketP.horsebetnumber.text = String(choosenHorse);
+    horseticketP.horsebetodds.text = "O";
+    if (MovieClip(root).winnerHorse == P){
+        horseticketP.horsebetodds.text = "80:1";
+    }
 	placedbet.text = "P";
+}
+horseticketP.horsebetodds.text = "O";
+if (MovieClip(root).winnerHorse == P){
+    horseticketP.horsebetodds.text = "80:1";
 }
