@@ -356,6 +356,13 @@ function quirksbg5(){
 	if (thebg.y >= 2600){
 		thebg.y = thebg.y - 900;
 	}
+
+	var time: int = int(getTimer());
+	if (time > 420000){
+		// lose because you are in the track uncovered
+	} else if (time > 125000 && thebg.bg05.currentFrame == 1){
+		thebg.bg05.gotoAndPlay(2);
+	}
 }
 
 function traceFPS(){
@@ -510,7 +517,16 @@ function changeBackgroundTo(newBackground: int){
 		mainChar.y = 550;
 		charBspeed = 18;
 		if (thebg.currentFrame == 5){
-			thebg.bg05.gotoAndStop(1);
+			var time: int = int(getTimer());
+			if (time < 125000){ // enter before race, nothing
+				thebg.bg05.gotoAndStop(1);
+			} else if (time < 240000){ // enter during race, see horse run
+				thebg.bg05.gotoAndPlay(2);
+			} else if (time < 420000){ // enter after race, see horse stay
+				thebg.bg05.gotoAndStop(120);
+			} else {
+				//lose because u entered track uncovered
+			}
 		}
 	}
 }
@@ -640,6 +656,7 @@ function handleTimeDisplay(){
 		return;
 	}
 	var currentTime: int = int(getTimer());
+	trace(currentTime);
 	var numberOfSeconds: int;
 	var numberOfMinutes: int;
 	numberOfSeconds = currentTime / 1000;
