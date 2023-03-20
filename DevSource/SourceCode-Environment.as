@@ -33,6 +33,7 @@ var systemsHacked: Boolean = false;
 changeBackgroundTo(5); // starts in stall (2)
 
 var catState: String = "super"; // super/dead/alive
+var winnerHorse: int = 0; // 0 means we don't know who won
 
 actionbubble.gotoAndStop(1);
 aidnotesquantum.visible = false;
@@ -56,6 +57,7 @@ function main(e: Event) {
 	handleActionBubble();
 	handleTimeDisplay();
 	trace(thebg.x, thebg.y);
+	trace("H: " + String(winnerHorse));
 }
 
 stage.addEventListener(Event.ENTER_FRAME, main);
@@ -360,8 +362,10 @@ function quirksbg5(){
 	var time: int = int(getTimer());
 	if (time > 420000){
 		// lose because you are in the track uncovered
-	} else if (time > 125000 && thebg.bg05.currentFrame == 1){
+	} else if (time > 10000 && thebg.bg05.currentFrame == 1){ // 125000
+		winnerHorse = Math.floor(Math.random() * 15);
 		thebg.bg05.gotoAndPlay(2);
+		thebg.bg05.thehorse.horsepanel.winnernumber.text = String(winnerHorse);
 	}
 }
 
@@ -443,6 +447,8 @@ thewalkie.addEventListener(MouseEvent.CLICK, enablewalkie);
 function endWalkiePressed(){
 	thewalkie.gotoAndStop(1);
 	thewalkie.visible = false;
+	walkieConnected = false;
+	winnerHorse = 0;
 }
 
 function changeBackgroundTo(newBackground: int){
@@ -522,8 +528,12 @@ function changeBackgroundTo(newBackground: int){
 				thebg.bg05.gotoAndStop(1);
 			} else if (time < 240000){ // enter during race, see horse run
 				thebg.bg05.gotoAndPlay(2);
+				winnerHorse = Math.floor(Math.random() * 15);
+				thebg.bg05.thehorse.horsepanel.winnernumber.text = String(winnerHorse);
 			} else if (time < 420000){ // enter after race, see horse stay
 				thebg.bg05.gotoAndStop(120);
+				winnerHorse = Math.floor(Math.random() * 15);
+				thebg.bg05.thehorse.horsepanel.winnernumber.text = String(winnerHorse);
 			} else {
 				//lose because u entered track uncovered
 			}
