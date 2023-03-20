@@ -794,6 +794,7 @@ function executeActionBubble(){
 	}
 	if (actionbubble.currentFrame == 18){
 		betpanel.visible = true;
+		betpanel.setOdds();
 	}
 	if (actionbubble.currentFrame == 19){
 		//leave forever
