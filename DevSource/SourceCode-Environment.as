@@ -453,8 +453,8 @@ function quirksbg5(){
 	}
 
 	var time: int = localTime;
-	if (time > 420000){
-		// lose because you are in the track uncovered
+	if (time > 420000 && endState != 6){ // 420000
+		happenEnding(6);
 	} else if (time > 125000 && thebg.bg05.currentFrame == 1){ // 125000
 		winnerHorse = Math.floor(Math.random() * 14) + 1;
 		thebg.bg05.gotoAndPlay(2);
@@ -800,8 +800,12 @@ function executeActionBubble(){
 		changeBackgroundTo(4);
 	}
 	if (actionbubble.currentFrame == 18){
-		betpanel.visible = true;
-		betpanel.setOdds();
+		if (localTime > 20000){
+			happenEnding(7);
+		} else {
+			betpanel.visible = true;
+			betpanel.setOdds();
+		}
 	}
 	if (actionbubble.currentFrame == 19){
 		happenEnding(2);
