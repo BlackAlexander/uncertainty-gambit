@@ -142,8 +142,6 @@ function handleWaveDisplay(){
 	// 5 - world  |  6 - horse
 	wavedisplay.waveobject01.gotoAndStop(3);
 	if (activeBackground == 1){
-		wavedisplay.waveobject03.gotoAndStop(1);
-		wavedisplay.waveobject04.gotoAndStop(1);
 		if (catState == "super") {
 			wavedisplay.waveobject02.gotoAndStop(1);
 		} else {
