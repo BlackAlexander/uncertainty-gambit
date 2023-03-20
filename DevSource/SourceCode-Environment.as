@@ -59,6 +59,7 @@ walkiebtn.visible = false;
 betpanel.visible = false;
 theendtween.gotoAndStop(1);
 theendtween.visible = false;
+theendbox.visible = false;
 
 function main(e: Event) {
 	if (currentFrame != 3) return;
@@ -69,7 +70,7 @@ function main(e: Event) {
 	handleQuirks();
 	handleActionBubble();
 	handleTimeDisplay();
-	trace(thebg.x, thebg.y);
+	//trace(thebg.x, thebg.y);
 }
 
 stage.addEventListener(Event.ENTER_FRAME, main);
@@ -103,6 +104,7 @@ function pressTakeKeys(evt00: KeyboardEvent) {
 }
 
 function handleWalking(){
+	if (currentFrame != 3) return;
 	if (keyLeftDown && handleObstaclesX("left")){
 		charXspeed = charBspeed * (-1);
 		charDirection = "left";
@@ -143,12 +145,14 @@ function handleWalking(){
 }
 
 function handleBackgroundMovement(){
+	if (currentFrame != 3) return;
 	thebg.x -= charXspeed;
 	thebg.y -= charYspeed;
 }
 
 
 function handleWaveDisplay(){
+	if (currentFrame != 3) return;
 	// 1 - wave   |  2 - cat
 	// 3 - human  |  4 - walkie
 	// 5 - world  |  6 - horse
@@ -358,6 +362,7 @@ function handleObstaclesY(direction: String){
 }
 
 function handleQuirks(){
+	if (currentFrame != 3) return;
 	if (activeBackground == 1){
 		try {
 			quirksbg1();
@@ -443,7 +448,7 @@ function quirksbg5(){
 	var time: int = localTime;
 	if (time > 420000){
 		// lose because you are in the track uncovered
-	} else if (time > 25000 && thebg.bg05.currentFrame == 1){ // 125000
+	} else if (time > 125000 && thebg.bg05.currentFrame == 1){ // 125000
 		winnerHorse = Math.floor(Math.random() * 14) + 1;
 		thebg.bg05.gotoAndPlay(2);
 		thebg.bg05.thehorse.horsepanel.winnernumber.text = String(winnerHorse);
@@ -650,6 +655,7 @@ function changeBackgroundTo(newBackground: int){
 }
 
 function handleActionBubble(){
+	if (currentFrame != 3) return;
 	if (activeBackground == 1){
 		actionbubble.gotoAndStop(1);
 		if (thebg.x >= 825 && thebg.x <= 925 && thebg.y >= 475 && thebg.y <= 750){
@@ -723,9 +729,7 @@ function handleActionBubble(){
 }
 
 function executeActionBubble(){
-	if (currentFrame != 3){
-		return;
-	}
+	if (currentFrame != 3) return;
 	if (actionbubble.currentFrame == 1){
 		1;
 	}
@@ -818,12 +822,28 @@ function handleTimeDisplay(){
 	}
 }
 
+leavegamebtn.addEventListener(MouseEvent.CLICK, showleavebox);
+function showleavebox(event:MouseEvent){
+	theendbox.visible = true;
+}
+
 function betwasplaced(chosenHorse: int){
 	trace(chosenHorse);
 }
 
+function happenEnding(thecase: int){
+	endState = thecase;
+	theendtween.gotoAndStop(1);
+	theendtween.visible = true;
+	if (thecase == 2 || thecase == 6){
+		theendtween.gotoAndPlay(92);
+	} else {
+		theendtween.gotoAndPlay(2);
+	}
+}
+
 function triggerEnding(){
-	//gotoAndStop(4);
+	gotoAndStop(4);
 }
 
 
