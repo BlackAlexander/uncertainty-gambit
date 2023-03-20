@@ -1,0 +1,15 @@
+btnhorseticketP.addEventListener(MouseEvent.CLICK, pressHorseP);
+function pressHorseP(event: MouseEvent){
+	choosenHorse = P;
+	for(var i: int = 1; i <= 14; i++){
+		var thisTicket = getChildByName("horseticket" + String(i));
+		thisTicket.gotoAndStop(1);
+		thisTicket.horsebetnumber.text = String(i);
+		var thisButton = getChildByName("btnhorseticket" + String(i));
+		thisButton.visible = true;
+	}
+	btnhorseticketP.visible = false;
+	horseticketP.gotoAndStop(2);
+	horseticketP.horsebetnumber.text = String(choosenHorse);
+	placedbet.text = "P";
+}
