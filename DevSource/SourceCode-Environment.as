@@ -30,7 +30,7 @@ var walkieStolen: Boolean = false;
 var walkieConnected: Boolean = false;
 var systemsHacked: Boolean = false;
 
-changeBackgroundTo(5); // starts in stall (2)
+changeBackgroundTo(2); // starts in stall (2)
 
 var catState: String = "super"; // super/dead/alive
 var winnerHorse: int = 0; // 0 means we don't know who won
@@ -140,8 +140,8 @@ function handleWaveDisplay(){
 	// 1 - wave   |  2 - cat
 	// 3 - human  |  4 - walkie
 	// 5 - world  |  6 - horse
+	wavedisplay.waveobject01.gotoAndStop(3);
 	if (activeBackground == 1){
-		wavedisplay.waveobject01.gotoAndStop(3);
 		wavedisplay.waveobject03.gotoAndStop(1);
 		wavedisplay.waveobject04.gotoAndStop(1);
 		if (catState == "super") {
@@ -155,26 +155,63 @@ function handleWaveDisplay(){
 				wavedisplay.waveobject02.catobj.gotoAndStop(2);
 			}
 		}
+		if (walkieConnected){
+			wavedisplay.waveobject03.gotoAndStop(4);
+			wavedisplay.waveobject04.gotoAndStop(6);
+			wavedisplay.waveobject04.insidehorse.gotoAndStop(winnerHorse);
+			if (winnerHorse == 0) wavedisplay.waveobject04.insidehorse.gotoAndStop(15);
+		} else {
+			wavedisplay.waveobject03.gotoAndStop(1);
+			wavedisplay.waveobject04.gotoAndStop(1);
+		}
 	} else if (activeBackground == 2){
-		wavedisplay.waveobject01.gotoAndStop(3);
 		wavedisplay.waveobject02.gotoAndStop(1);
-		wavedisplay.waveobject03.gotoAndStop(1);
-		wavedisplay.waveobject04.gotoAndStop(1);
+		if (walkieConnected){
+			wavedisplay.waveobject03.gotoAndStop(4);
+			wavedisplay.waveobject04.gotoAndStop(6);
+			wavedisplay.waveobject04.insidehorse.gotoAndStop(winnerHorse);
+			if (winnerHorse == 0) wavedisplay.waveobject04.insidehorse.gotoAndStop(15);
+		} else {
+			wavedisplay.waveobject03.gotoAndStop(1);
+			wavedisplay.waveobject04.gotoAndStop(1);
+		}
 	} else if (activeBackground == 3){
-		wavedisplay.waveobject01.gotoAndStop(3);
 		wavedisplay.waveobject02.gotoAndStop(1);
-		wavedisplay.waveobject03.gotoAndStop(1);
-		wavedisplay.waveobject04.gotoAndStop(1);
+		if (walkieConnected){
+			wavedisplay.waveobject03.gotoAndStop(4);
+			wavedisplay.waveobject04.gotoAndStop(6);
+			wavedisplay.waveobject04.insidehorse.gotoAndStop(winnerHorse);
+			if (winnerHorse == 0) wavedisplay.waveobject04.insidehorse.gotoAndStop(15);
+		} else {
+			wavedisplay.waveobject03.gotoAndStop(1);
+			wavedisplay.waveobject04.gotoAndStop(1);
+		}
 	} else if (activeBackground == 4){
-		wavedisplay.waveobject01.gotoAndStop(3);
 		wavedisplay.waveobject02.gotoAndStop(1);
-		wavedisplay.waveobject03.gotoAndStop(1);
-		wavedisplay.waveobject04.gotoAndStop(1);
+		if (walkieConnected){
+			wavedisplay.waveobject03.gotoAndStop(4);
+			wavedisplay.waveobject04.gotoAndStop(6);
+			wavedisplay.waveobject04.insidehorse.gotoAndStop(winnerHorse);
+			if (winnerHorse == 0) wavedisplay.waveobject04.insidehorse.gotoAndStop(15);
+		} else {
+			wavedisplay.waveobject03.gotoAndStop(1);
+			wavedisplay.waveobject04.gotoAndStop(1);
+		}
 	} else if (activeBackground == 5){ // TODO: implement
-		wavedisplay.waveobject01.gotoAndStop(3);
-		wavedisplay.waveobject02.gotoAndStop(6);
-		wavedisplay.waveobject03.gotoAndStop(1);
-		wavedisplay.waveobject04.gotoAndStop(1);
+		wavedisplay.waveobject02.gotoAndStop(1);
+		if (walkieConnected) {
+			wavedisplay.waveobject03.gotoAndStop(4);
+		} else {
+			wavedisplay.waveobject03.gotoAndStop(1);
+		}
+		wavedisplay.waveobject04.gotoAndStop(6);
+		wavedisplay.waveobject04.insidehorse.gotoAndStop(winnerHorse);
+		if (winnerHorse == 0) wavedisplay.waveobject04.insidehorse.gotoAndStop(15);
+		if (walkieConnected) {
+			wavedisplay.waveobject03.gotoAndStop(4);
+		} else {
+			wavedisplay.waveobject03.gotoAndStop(1);
+		}
 	} else {
 		wavedisplay.waveobject01.gotoAndStop(1);
 		wavedisplay.waveobject02.gotoAndStop(1);
@@ -362,8 +399,8 @@ function quirksbg5(){
 	var time: int = int(getTimer());
 	if (time > 420000){
 		// lose because you are in the track uncovered
-	} else if (time > 10000 && thebg.bg05.currentFrame == 1){ // 125000
-		winnerHorse = Math.floor(Math.random() * 15);
+	} else if (time > 125000 && thebg.bg05.currentFrame == 1){ // 125000
+		winnerHorse = Math.floor(Math.random() * 14) + 1;
 		thebg.bg05.gotoAndPlay(2);
 		thebg.bg05.thehorse.horsepanel.winnernumber.text = String(winnerHorse);
 	}
@@ -448,7 +485,9 @@ function endWalkiePressed(){
 	thewalkie.gotoAndStop(1);
 	thewalkie.visible = false;
 	walkieConnected = false;
-	winnerHorse = 0;
+	if (activeBackground != 5){
+		winnerHorse = 0;
+	}
 }
 
 function changeBackgroundTo(newBackground: int){
@@ -511,6 +550,9 @@ function changeBackgroundTo(newBackground: int){
 			thebg.x = -2205;
 			thebg.y = 573;
 		}
+		if (!walkieConnected){
+			winnerHorse = 0;
+		}
 	}
 	if (newBackground == 5){
 		thebg.x = 1074;
@@ -528,11 +570,15 @@ function changeBackgroundTo(newBackground: int){
 				thebg.bg05.gotoAndStop(1);
 			} else if (time < 240000){ // enter during race, see horse run
 				thebg.bg05.gotoAndPlay(2);
-				winnerHorse = Math.floor(Math.random() * 15);
+				if (winnerHorse == 0){
+					winnerHorse = Math.floor(Math.random() * 14) + 1;
+				} else {
+					thebg.bg05.gotoAndStop(120);
+				}
 				thebg.bg05.thehorse.horsepanel.winnernumber.text = String(winnerHorse);
 			} else if (time < 420000){ // enter after race, see horse stay
 				thebg.bg05.gotoAndStop(120);
-				winnerHorse = Math.floor(Math.random() * 15);
+				if (winnerHorse == 0) winnerHorse = Math.floor(Math.random() * 14) + 1;
 				thebg.bg05.thehorse.horsepanel.winnernumber.text = String(winnerHorse);
 			} else {
 				//lose because u entered track uncovered
@@ -596,7 +642,7 @@ function handleActionBubble(){
 		if (thebg.x <= 1038 && thebg.y <= 934 && thebg.y >= 664){
 			actionbubble.gotoAndStop(15);
 		}
-		if (thebg.y <= 250 && walkieStolen && !walkieConnected){
+		if (thebg.y <= 400 && walkieStolen && !walkieConnected){
 			actionbubble.gotoAndStop(16);
 		}
 	}
@@ -658,6 +704,9 @@ function executeActionBubble(){
 	}
 	if (actionbubble.currentFrame == 16){
 		walkieConnected = true;
+		thewalkie.visible = true;
+		thewalkie.gotoAndPlay(1);
+		thewalkie.walkiewaves.visible = walkieConnected;
 	}
 }
 
