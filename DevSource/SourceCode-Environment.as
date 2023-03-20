@@ -156,6 +156,13 @@ function handleWaveDisplay(){
 	// 1 - wave   |  2 - cat
 	// 3 - human  |  4 - walkie
 	// 5 - world  |  6 - horse
+	if (endState == 2 || endState == 6){
+		wavedisplay.waveobject01.gotoAndStop(5);
+		wavedisplay.waveobject02.gotoAndStop(1);
+		wavedisplay.waveobject03.gotoAndStop(1);
+		wavedisplay.waveobject04.gotoAndStop(1);
+		return;
+	}
 	wavedisplay.waveobject01.gotoAndStop(3);
 	if (activeBackground == 1){
 		if (catState == "super") {
@@ -797,7 +804,7 @@ function executeActionBubble(){
 		betpanel.setOdds();
 	}
 	if (actionbubble.currentFrame == 19){
-		//leave forever
+		happenEnding(2);
 	}
 }
 
@@ -829,7 +836,21 @@ function showleavebox(event:MouseEvent){
 }
 
 function betwasplaced(chosenHorse: int){
-	trace(chosenHorse);
+	if (chosenHorse == 0){
+		return;
+	}
+	if (chosenHorse == winnerHorse && systemsHacked){
+		happenEnding(3);
+		return;
+	}
+	if (chosenHorse == winnerHorse && !systemsHacked){
+		happenEnding(4);
+		return;
+	}
+	if (chosenHorse != winnerHorse){
+		happenEnding(5);
+		return;
+	}
 }
 
 function happenEnding(thecase: int){
