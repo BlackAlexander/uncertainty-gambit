@@ -7,7 +7,7 @@
  7 - exit office
  8 - steal notes
  9 - steal radio
-10 - hack system
+10 - disable CCTV
 11 - turn off power
 12 - turn on powerv
 13 - access the tracks
