@@ -23,6 +23,8 @@ var charDirection: String = "left"; //left or right
 
 var oldTime = 0;
 var newTime = 0;
+var localTime: int = 0;
+var gameStartTime: int = getTimer();
 
 var powerIsOn: Boolean = false;
 var notesStolen: Boolean = false;
@@ -47,9 +49,8 @@ thewalkie.visible = false;
 walkiebtn.visible = false;
 
 function main(e: Event) {
-	if (currentFrame != 3){
-		return;
-	}
+	if (currentFrame != 3) return;
+	localTime = getTimer() - gameStartTime;
 	handleWalking();
 	handleWaveDisplay();
 	handleBackgroundMovement();
@@ -57,7 +58,6 @@ function main(e: Event) {
 	handleActionBubble();
 	handleTimeDisplay();
 	trace(thebg.x, thebg.y);
-	trace("H: " + String(winnerHorse));
 }
 
 stage.addEventListener(Event.ENTER_FRAME, main);
@@ -394,10 +394,10 @@ function quirksbg5(){
 		thebg.y = thebg.y - 900;
 	}
 
-	var time: int = int(getTimer());
+	var time: int = localTime;
 	if (time > 420000){
 		// lose because you are in the track uncovered
-	} else if (time > 125000 && thebg.bg05.currentFrame == 1){ // 125000
+	} else if (time > 25000 && thebg.bg05.currentFrame == 1){ // 125000
 		winnerHorse = Math.floor(Math.random() * 14) + 1;
 		thebg.bg05.gotoAndPlay(2);
 		thebg.bg05.thehorse.horsepanel.winnernumber.text = String(winnerHorse);
@@ -405,7 +405,7 @@ function quirksbg5(){
 }
 
 function traceFPS(){
-	newTime = getTimer();
+	newTime = localTime;
 	if (newTime != oldTime){
 		trace(1000 / (newTime - oldTime));
 	}
@@ -563,7 +563,7 @@ function changeBackgroundTo(newBackground: int){
 		mainChar.y = 550;
 		charBspeed = 18;
 		if (thebg.currentFrame == 5){
-			var time: int = int(getTimer());
+			var time: int = localTime;
 			if (time < 125000){ // enter before race, nothing
 				thebg.bg05.gotoAndStop(1);
 			} else if (time < 240000){ // enter during race, see horse run
@@ -712,7 +712,7 @@ function handleTimeDisplay(){
 	if (currentFrame != 3 || thewatch.visible == false){
 		return;
 	}
-	var currentTime: int = int(getTimer());
+	var currentTime: int = localTime;
 	trace(currentTime);
 	var numberOfSeconds: int;
 	var numberOfMinutes: int;
