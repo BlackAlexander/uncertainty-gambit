@@ -11,4 +11,5 @@ function playIntro(event:MouseEvent){
 	intromovie.visible = true;
 	intromovie.gotoAndPlay(2);
 	playintrobtn.visible = false;
+	skipbtn.alpha = 0.3;
 }
