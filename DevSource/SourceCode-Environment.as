@@ -70,7 +70,6 @@ function main(e: Event) {
 	handleQuirks();
 	handleActionBubble();
 	handleTimeDisplay();
-	//trace(thebg.x, thebg.y);
 }
 
 stage.addEventListener(Event.ENTER_FRAME, main);
@@ -358,7 +357,7 @@ function handleObstaclesY(direction: String){
 		}
 	}
 	if (activeBackground == 6){
-		if (thebg.y + charBspeed >= 675 && direction == "up"){
+		if (thebg.y + charBspeed >= 535 && direction == "up"){
 			return false;
 		}
 		if (thebg.y - charBspeed <= 300 && direction == "down"){
@@ -723,7 +722,7 @@ function handleActionBubble(){
 	}
 	if (activeBackground == 6){
 		actionbubble.gotoAndStop(1);
-		if(thebg.x >= 1200 && thebg.x <= 1650 && thebg.y >= 550){
+		if(thebg.x >= 1200 && thebg.x <= 1650 && thebg.y >= 480){
 			actionbubble.gotoAndStop(17);
 		}
 		if (thebg.x <= 800 && thebg.y <= 600){
