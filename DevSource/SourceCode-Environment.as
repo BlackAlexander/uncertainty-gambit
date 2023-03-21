@@ -800,7 +800,7 @@ function executeActionBubble(){
 		changeBackgroundTo(4);
 	}
 	if (actionbubble.currentFrame == 18){
-		if (localTime > 20000){
+		if (localTime > 420000){ //420000
 			happenEnding(7);
 		} else {
 			betpanel.visible = true;
