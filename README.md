@@ -20,7 +20,7 @@ You will try to sneak in a quantum horse race track. It works on basic quantum p
 
 ## System Requirements
 
-- Windows operating system
+- Windows/macOS operating system
 - 45MB Disk Space
 
 ## Contols
