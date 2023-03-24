@@ -32,12 +32,12 @@ You will try to sneak in a quantum horse race track. It works on basic quantum p
 ## Gameplay
 
 - If you're unsure about your understanding of quantum mechanics, the game is here to help you. There is a brief explanation in the intro, and more notes about the principles once you begin the game.
-- You can check the Walkthrough.
+- You can check the [Walkthrough](https://github.com/BlackAlexander/uncertainty-gambit/tree/main/Trivia%20%26%20Walkthrough).
 
 ## Feedback and Support
 
-If you encounter any issues or have feedback about the game, please (open an issue)[https://github.com/BlackAlexander/uncertainty-gambit/issues] on the GitHub repository. It will be adressed as soon as possible.
+If you encounter any issues or have feedback about the game, please [open an issue](https://github.com/BlackAlexander/uncertainty-gambit/issues) on the GitHub repository. It will be adressed as soon as possible.
 
 ---
 
-Developed by (Alexandru Negru)[https://github.com/BlackAlexander]
+Developed by [Alexandru Negru](https://github.com/BlackAlexander)
