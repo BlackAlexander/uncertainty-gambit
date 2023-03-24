@@ -1,1 +1,1 @@
--
+- Check the Walkthrough for a complete and brief explanation on how to finish the game.

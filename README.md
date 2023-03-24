@@ -10,6 +10,7 @@ You will try to sneak in a quantum horse race track. It works on basic quantum p
 - Fully hand-drawn animations and assets
 - Seven different ending scenarios, based on your choices and actions
 - Elements of non-Euclidean geometry
+- Developed without any game engines, frameworks, or even external libraries
 - Unique story
 
 ## Installation
