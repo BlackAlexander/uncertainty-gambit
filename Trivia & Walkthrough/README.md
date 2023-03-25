@@ -1,1 +1,1 @@
-- Check the Walkthrough for a complete and brief explanation on how to finish the game.
+- Check the [Walkthrough](https://github.com/BlackAlexander/uncertainty-gambit/blob/main/Trivia%20%26%20Walkthrough/Walkthrough.pdf) for a complete and brief explanation on how to finish the game.
