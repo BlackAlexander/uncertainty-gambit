@@ -1,1 +1,3 @@
 - Check the [Walkthrough](https://github.com/BlackAlexander/uncertainty-gambit/blob/main/Trivia%20%26%20Walkthrough/Walkthrough.pdf) for a complete and brief explanation on how to finish the game.
+
+- The Walkthrough only presents the quickest way to finish the game, ignoring the details that make the game be what it trully is. Please read the [Trivia file](https://github.com/BlackAlexander/uncertainty-gambit/blob/main/Trivia%20%26%20Walkthrough/Trivia.md) to learn more about what the game has to offer.
