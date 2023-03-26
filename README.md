@@ -18,7 +18,7 @@ You will try to sneak in a quantum horse race track. It works on basic quantum p
 
 1. Download the latest release from the [Release Page](https://github.com/BlackAlexander/uncertainty-gambit/releases).
 2. You can opt for unzipping the archive for the pre-installed version, or installing the game using the _.air_ file. It requires [Adobe AIR](https://airsdk.harman.com/runtime).
-3. Double-click the _Uncertainty-Gambit.exe_ file to launch the game.
+3. Double-click the executable file to launch the game.
 
 ## System Requirements
 
