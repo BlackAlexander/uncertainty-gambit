@@ -10,6 +10,7 @@ var activeBackground: int = 1;
 // 5 - Horse track
 // 6 - Bet room
 // 7 - Public
+// 8 - Easter Egg
 
 var keyLeftDown: Boolean = false;
 var keyRightDown: Boolean = false;
@@ -254,7 +255,7 @@ function handleWaveDisplay(){
 		} else {
 			wavedisplay.waveobject03.gotoAndStop(1);
 		}
-	} else if (activeBackground == 6){
+	} else if (activeBackground == 6 || activeBackground == 8){
 		wavedisplay.waveobject02.gotoAndStop(1);
 		if (walkieConnected){
 			wavedisplay.waveobject03.gotoAndStop(4);
@@ -328,6 +329,14 @@ function handleObstaclesX(direction: String){
 			return false;
 		}
 	}
+	if (activeBackground == 8){
+		if (thebg.x + charBspeed >= 1200 && direction == "left"){
+			return false;
+		}
+		if (thebg.x - charBspeed <= 800 && direction == "right"){
+			return false;
+		}
+	}
 	return true;
 }
 	
@@ -383,6 +392,14 @@ function handleObstaclesY(direction: String){
 			return false;
 		}
 		if (thebg.y - charBspeed <= 300 && direction == "down"){
+			return false;
+		}
+	}
+	if (activeBackground == 8){
+		if (thebg.y + charBspeed >= 850 && direction == "up"){
+			return false;
+		}
+		if (thebg.y - charBspeed <= 0 && direction == "down"){
 			return false;
 		}
 	}
@@ -718,6 +735,15 @@ function changeBackgroundTo(newBackground: int){
 		mainChar.height = 500;
 		charBspeed = 20;
 	}
+	if (newBackground == 8){
+		thebg.x = 1000;
+		thebg.y = 500;
+		thebg.width = 5000;
+		thebg.height = 5000;
+		mainChar.width = 250;
+		mainChar.height = 500;
+		charBspeed = 25;
+	}
 }
 
 function handleActionBubble(){
@@ -971,6 +997,10 @@ function handleHelpMenu(){
 		}
 		thehelpmenu.hintstext.text = hintStringBet;
 		thehelpmenu.gotoAndStop(7);
+	}
+	if (activeBackground == 8){ // easter egg
+		thehelpmenu.gotoAndStop(9);
+		thehelpmenu.hintstext.text = "Congratulations on finding the secret room! Enjoy.\n";
 	}
 }
 
