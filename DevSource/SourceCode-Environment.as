@@ -878,40 +878,70 @@ function handleHelpMenu(){
 		thehelpmenu.gotoAndStop(3);
 		thehelpmenu.hintstext.text = "The bathroom you're in is a good place to isolate yourself from the world at a quantum level. However, there's nothing much to do here. You should leave, the exit door is down.";
 	}
-	if (activeBackground == 2){
+	if (activeBackground == 2){ // stall
 		thehelpmenu.gotoAndStop(2);
 		thehelpmenu.hintstext.text = "You are in an enclosed bathroom stall. There's nothing to do here. You should exit.";
 	}
-	if (activeBackground == 3){
-		hintString = "";
+	if (activeBackground == 3){ // office
+		thehelpmenu.gotoAndStop(4);
+		var hintStringOffice: String = "";
 		var allDone: Boolean = true;
 		if (notesStolen == false){
-			hintString += "- Steal the notes from the upper-right part.\n";
+			hintStringOffice += "- Steal the guard's notes from the upper right part.\n";
 			allDone = false;
 		}
 		if (walkieStolen == false){
-			hintString += "- Steal the walkie talkie from the desk on the left.\n";
+			hintStringOffice += "- Steal the walkie talkie from the desk on the left.\n";
 			allDone = false;
 		}
 		if (systemsHacked == false && powerIsOn == false){
-			hintString += "- Turn on the power from the hallway and come back to hack the CCTV from the laptop.\n";
+			hintStringOffice += "- Turn on the power from the hallway and come back to hack the CCTV from the laptop.\n";
 			allDone = false;
 		}
 		if (systemsHacked == false && powerIsOn == true){
-			hintString += "- Hack the systems and disable the CCTV. Do this from the laptop on the upper side."
+			hintStringOffice += "- Hack the systems and disable the CCTV. Do this from the laptop on the upper side.";
 		}
 		if (allDone){
-			hintString = "There's nothing left to do here. Good job. Now go to the race track."
+			hintStringOffice = "There's nothing left to do here. Good job. Now go to the race track.";
 		}
-		thehelpmenu.hintstext.text = hintString;
+		thehelpmenu.hintstext.text = hintStringOffice;
 	}
-	if (activeBackground == 4){
+	if (activeBackground == 4){ // hallway
 		thehelpmenu.gotoAndStop(5);
+		var hintStringHallway: String = "";
+		if (powerIsOn == false){
+			hintStringHallway += "Go to the left and turn on the power. The switch is on the upper part. A green light should appear.\n";
+		} else {
+			if (!systemsHacked || !walkieStolen || !notesStolen){
+				hintStringHallway += "Go to the office. You can find it on the lower side, vis-a-vis the bathroom entrance, around the middle of the hallway.\n";
+				if (!systemsHacked){
+					hintStringHallway += "You still have to hack the systems and disable the CCTV.\n";
+				}
+				if (!walkieStolen){
+					hintStringHallway += "You still have to steal the walkie talkie.\n";
+				}
+				if (!notesStolen){
+					hintStringHallway += "You still have to steal the notes.\n";
+				}
+			} else {
+				if (winnerHorse == 0){
+					hintStringHallway += "Go to the race track to see which horse won.\n";
+					hintStringHallway += "The entrance is on the left.\n";
+					hintStringHallway += "The colors from the password can be found on the first page of the stolen notes, in the lower right part.\n";
+					hintStringHallway += "The code is red, blue, green, red, purple, yellow.\n";
+				} else {
+					hintStringHallway += "Keep the radio station connected by clicking it!\n";
+					hintStringHallway += "Don't stop! Otherwise, the horse will fall into superposition again.\n";
+					hintStringHallway += "Go to the betting room. The door is on the right side of the hallway.\n";
+				}
+			}
+		}
+		thehelpmenu.hintstext.text = hintStringHallway;
 	}
-	if (activeBackground == 5){
+	if (activeBackground == 5){ // track
 		thehelpmenu.gotoAndStop(6);
 	}
-	if (activeBackground == 6){
+	if (activeBackground == 6){ // betroom
 		thehelpmenu.gotoAndStop(7);
 	}
 }
