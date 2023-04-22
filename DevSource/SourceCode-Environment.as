@@ -86,6 +86,11 @@ function pressMultipleKeys(evt0: KeyboardEvent) {
 		keyDownDown = true;
 	} else if (evt0.keyCode == 70) {
 		executeActionBubble();
+	} else if (evt0.keyCode == 81) {
+		toggleFullScreen();
+	} else if (evt0.keyCode == 27) {
+		executeExit();
+		evt0.preventDefault();
 	}
 }
 
@@ -99,6 +104,22 @@ function pressTakeKeys(evt00: KeyboardEvent) {
 		keyRightDown = false;
 	} else if (evt00.keyCode == 83 || evt00.keyCode == 40) {
 		keyDownDown = false;
+	}
+}
+
+function toggleFullScreen(){
+	if (stage.displayState == StageDisplayState.NORMAL){
+		stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
+	} else if (stage.displayState == StageDisplayState.FULL_SCREEN_INTERACTIVE){
+		stage.displayState = StageDisplayState.NORMAL;
+	}
+}
+
+function executeExit(){
+	if (currentFrame == 4){
+		proceed();
+	} else if (currentFrame == 5){
+		gotoAndStop(1);
 	}
 }
 
@@ -597,7 +618,7 @@ function changeBackgroundTo(newBackground: int){
 		thebg.height = 11000;
 		mainChar.width = 80;
 		mainChar.height = 160;
-		charBspeed = 24;
+		charBspeed = 22;
 		if (oldBackground == 1){ // from bathroom
 			thebg.x = 2250;
 			thebg.y = 650;
