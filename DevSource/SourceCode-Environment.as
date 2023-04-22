@@ -597,7 +597,7 @@ function changeBackgroundTo(newBackground: int){
 		thebg.height = 11000;
 		mainChar.width = 80;
 		mainChar.height = 160;
-		charBspeed = 11;
+		charBspeed = 24;
 		if (oldBackground == 1){ // from bathroom
 			thebg.x = 2250;
 			thebg.y = 650;
@@ -816,7 +816,6 @@ function handleTimeDisplay(){
 		return;
 	}
 	var currentTime: int = localTime;
-	trace(currentTime);
 	var numberOfSeconds: int;
 	var numberOfMinutes: int;
 	numberOfSeconds = currentTime / 1000;
