@@ -561,6 +561,7 @@ thehelpbtn.addEventListener(MouseEvent.CLICK, showHelpMenu);
 function showHelpMenu(event: MouseEvent){
 	thehelpmenu.visible = true;
 	thehelpmenu.gotoAndStop(1);
+	thehelpmenu.hintstext.text = "";
 	if (aidnotesdoctor.visible){
 		aidnotesdoctor.visible = false;
 	}
@@ -871,7 +872,48 @@ function executeActionBubble(){
 }
 
 function handleHelpMenu(){
-	1;
+	thehelpmenu.hintstext.text = "";
+	thehelpmenu.gotoAndStop(1);
+	if (activeBackground == 1){ // bathroom
+		thehelpmenu.gotoAndStop(3);
+		thehelpmenu.hintstext.text = "The bathroom you're in is a good place to isolate yourself from the world at a quantum level. However, there's nothing much to do here. You should leave, the exit door is down.";
+	}
+	if (activeBackground == 2){
+		thehelpmenu.gotoAndStop(2);
+		thehelpmenu.hintstext.text = "You are in an enclosed bathroom stall. There's nothing to do here. You should exit.";
+	}
+	if (activeBackground == 3){
+		hintString = "";
+		var allDone: Boolean = true;
+		if (notesStolen == false){
+			hintString += "- Steal the notes from the upper-right part.\n";
+			allDone = false;
+		}
+		if (walkieStolen == false){
+			hintString += "- Steal the walkie talkie from the desk on the left.\n";
+			allDone = false;
+		}
+		if (systemsHacked == false && powerIsOn == false){
+			hintString += "- Turn on the power from the hallway and come back to hack the CCTV from the laptop.\n";
+			allDone = false;
+		}
+		if (systemsHacked == false && powerIsOn == true){
+			hintString += "- Hack the systems and disable the CCTV. Do this from the laptop on the upper side."
+		}
+		if (allDone){
+			hintString = "There's nothing left to do here. Good job. Now go to the race track."
+		}
+		thehelpmenu.hintstext.text = hintString;
+	}
+	if (activeBackground == 4){
+		thehelpmenu.gotoAndStop(5);
+	}
+	if (activeBackground == 5){
+		thehelpmenu.gotoAndStop(6);
+	}
+	if (activeBackground == 6){
+		thehelpmenu.gotoAndStop(7);
+	}
 }
 
 function handleTimeDisplay(){
