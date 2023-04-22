@@ -16,6 +16,8 @@ var keyLeftDown: Boolean = false;
 var keyRightDown: Boolean = false;
 var keyUpDown: Boolean = false;
 var keyDownDown: Boolean = false;
+var keyTurnLeft: Boolean = false;
+var keyTurnRight: Boolean = false;
 
 var charXspeed: Number = 0;
 var charYspeed: Number = 0;
@@ -33,11 +35,12 @@ var walkieStolen: Boolean = false;
 var walkieConnected: Boolean = false;
 var systemsHacked: Boolean = false;
 
-changeBackgroundTo(2); // starts in stall (2)
+changeBackgroundTo(8); // starts in stall (2)
 
 var catState: String = "super"; // super/dead/alive
 var winnerHorse: int = 0; // 0 means we don't know who won
 var endState: int = 0;
+var keyPosition: int = 0;
 // 0 - nothing yet
 // 1 - pressed exit
 // 2 - left building
@@ -62,6 +65,7 @@ theendtween.gotoAndStop(1);
 theendtween.visible = false;
 theendbox.visible = false;
 thehelpmenu.visible = false;
+fullitemlock.visible = false;
 
 function main(e: Event) {
 	if (currentFrame != 3) return;
@@ -93,6 +97,12 @@ function pressMultipleKeys(evt0: KeyboardEvent) {
 	} else if (evt0.keyCode == 27) {
 		executeExit();
 		evt0.preventDefault();
+	} else if (evt0.keyCode == 82) {
+		keyTurnLeft = true;
+	} else if (evt0.keyCode == 84) {
+		keyTurnRight = true;
+	} else if (evt0.keyCode == 75) {
+		spinTheLock();
 	}
 }
 
@@ -106,6 +116,10 @@ function pressTakeKeys(evt00: KeyboardEvent) {
 		keyRightDown = false;
 	} else if (evt00.keyCode == 83 || evt00.keyCode == 40) {
 		keyDownDown = false;
+	} else if (evt00.keyCode == 82) {
+		keyTurnLeft = false;
+	} else if (evt00.keyCode == 84) {
+		keyTurnRight = false;
 	}
 }
 
@@ -436,6 +450,13 @@ function handleQuirks(){
 			trace("Error in quirk bg06: " + e);
 		}
 	}
+	if (activeBackground == 8){
+		try {
+			quirksbg8();
+		} catch (e: Error){
+			trace("Error in quirk bg08: " + e);
+		}
+	}
 }
 
 function quirksbg1(){
@@ -506,6 +527,47 @@ function quirksbg6(){
 	}
 	if (thebg.x > 900){
 		betpanel.visible = false;
+	}
+}
+
+function quirksbg8(){
+	if (thebg.currentFrame != 8){
+		return;
+	}
+	if (thebg.y <= 150){
+		fullitemlock.visible = false;
+	}
+	if (fullitemlock.visible){
+		if(keyTurnLeft){
+			if (fullitemlock.picktoolitem.currentFrame > 1){
+				fullitemlock.picktoolitem.gotoAndStop(fullitemlock.picktoolitem.currentFrame - 1);
+				if (fullitemlock.picktoolitem.currentFrame == keyPosition){
+					fullitemlock.spininside.gotoAndPlay(51);
+				}
+			}
+		}
+		if(keyTurnRight){
+			if (fullitemlock.picktoolitem.currentFrame < 30){
+				fullitemlock.picktoolitem.gotoAndStop(fullitemlock.picktoolitem.currentFrame + 1);
+				if (fullitemlock.picktoolitem.currentFrame == keyPosition){
+					fullitemlock.spininside.gotoAndPlay(51);
+				}
+			}
+		}
+	}
+}
+
+function spinTheLock(){
+	if (thebg.currentFrame != 8){
+		return;
+	}
+	if (fullitemlock.visible == false){
+		return;
+	}
+	if (fullitemlock.picktoolitem.currentFrame == keyPosition){
+		fullitemlock.spininside.gotoAndPlay(20);
+	} else {
+		fullitemlock.spininside.gotoAndPlay(2);
 	}
 }
 
@@ -818,6 +880,12 @@ function handleActionBubble(){
 			actionbubble.gotoAndStop(19);
 		}
 	}
+	if (activeBackground == 8){
+		actionbubble.gotoAndStop(1);
+		if(thebg.y >= 575){
+			actionbubble.gotoAndStop(20);
+		}
+	}
 }
 
 function executeActionBubble(){
@@ -894,6 +962,12 @@ function executeActionBubble(){
 	}
 	if (actionbubble.currentFrame == 19){
 		happenEnding(2);
+	}
+	if (actionbubble.currentFrame == 20){
+		fullitemlock.visible = true;
+		fullitemlock.picktoolitem.gotoAndStop(1);
+		fullitemlock.spininside.gotoAndStop(1);
+		keyPosition = Math.floor(Math.random() * 20) + 5
 	}
 }
 
