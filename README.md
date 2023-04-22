@@ -25,7 +25,7 @@ You will try to sneak in a quantum horse race track. It works on basic quantum p
 - Windows/macOS operating system
 - 45MB Disk Space
 
-## Contols
+## Controls
 
 - Use your mouse to interact with the interface, and the archetypal WASD/arrows to move around.
 - Press F to interact with objects.
