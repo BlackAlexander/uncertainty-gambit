@@ -940,8 +940,36 @@ function handleHelpMenu(){
 	}
 	if (activeBackground == 5){ // track
 		thehelpmenu.gotoAndStop(6);
+		var hintStringTrack: String = "";
+		if (winnerHorse == 0){
+			hintStringTrack += "Wait to see which horse wins. The race starts at 12:10.\n";
+		} else {
+			if (!walkieStolen){
+				hintStringTrack += "Go to the office and steal the radio.\n";
+			} else {
+				hintStringTrack += "See which horse won.\n";
+				hintStringTrack += "Go to the desk from the lower part. Connect the radio with the one you stole.\n";
+				hintStringTrack += "Keep clicking on the radio station. Don't stop. \n";
+				hintStringTrack += "Leave the track and go to the betting room. \n";
+				hintStringTrack += "The betting room is on the rightmost part of the hallway.\n";
+				hintStringTrack += "Don't stop clicking on the station.\n"
+			}
+		}
+		hintStringTrack += "Leave the track before 12:15\n";
+		thehelpmenu.hintstext.text = hintStringTrack;
 	}
 	if (activeBackground == 6){ // betroom
+		var hintStringBet: String = "";
+		if (winnerHorse == 0){
+			hintStringBet += "Find out which horse won. Go back.\n";
+		} else {
+			if (!systemsHacked){
+				hintStringBet += "You didn't disable the CCTV. Proceed with caution.\n";
+			} else {
+				hintStringBet += "Place a bet on the winning horse.\n";
+			}
+		}
+		thehelpmenu.hintstext.text = hintStringBet;
 		thehelpmenu.gotoAndStop(7);
 	}
 }
