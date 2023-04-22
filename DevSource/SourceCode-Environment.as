@@ -35,12 +35,11 @@ var walkieStolen: Boolean = false;
 var walkieConnected: Boolean = false;
 var systemsHacked: Boolean = false;
 
-changeBackgroundTo(8); // starts in stall (2)
+changeBackgroundTo(2); // starts in stall (2)
 
 var catState: String = "super"; // super/dead/alive
 var winnerHorse: int = 0; // 0 means we don't know who won
 var endState: int = 0;
-var keyPosition: int = 0;
 // 0 - nothing yet
 // 1 - pressed exit
 // 2 - left building
@@ -49,6 +48,8 @@ var keyPosition: int = 0;
 // 5 - lost, bet on wrong horse
 // 6 - race track uncovered with player on it
 // 7 - didn't place bet on time
+// 8 - easter egg ending
+var keyPosition: int = 0;
 
 actionbubble.gotoAndStop(1);
 aidnotesquantum.visible = false;
@@ -534,7 +535,7 @@ function quirksbg8(){
 	if (thebg.currentFrame != 8){
 		return;
 	}
-	if (thebg.y <= 150){
+	if (thebg.y <= 350){
 		fullitemlock.visible = false;
 	}
 	if (fullitemlock.visible){
@@ -566,6 +567,7 @@ function spinTheLock(){
 	}
 	if (fullitemlock.picktoolitem.currentFrame == keyPosition){
 		fullitemlock.spininside.gotoAndPlay(20);
+		happenEnding(8);
 	} else {
 		fullitemlock.spininside.gotoAndPlay(2);
 	}
