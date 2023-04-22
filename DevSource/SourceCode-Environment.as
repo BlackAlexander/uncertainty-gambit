@@ -60,6 +60,7 @@ betpanel.visible = false;
 theendtween.gotoAndStop(1);
 theendtween.visible = false;
 theendbox.visible = false;
+thehelpmenu.visible = false;
 
 function main(e: Event) {
 	if (currentFrame != 3) return;
@@ -512,6 +513,9 @@ function showAidDoctor(event: MouseEvent){
 		thewatch.visible = false;
 		watchshowbtn.visible = true;
 	}
+	if (thehelpmenu.visible){
+		thehelpmenu.visible = false;
+	}
 }
 
 aidbtnquantum.addEventListener(MouseEvent.CLICK, showAidQuantum);
@@ -527,6 +531,9 @@ function showAidQuantum(event: MouseEvent){
 		thewatch.visible = false;
 		watchshowbtn.visible = true;
 	}
+	if (thehelpmenu.visible){
+		thehelpmenu.visible = false;
+	}
 }
 
 aidbtnstolen.addEventListener(MouseEvent.CLICK, showAidStolen);
@@ -537,6 +544,31 @@ function showAidStolen(event: MouseEvent){
 	}
 	if (aidnotesquantum.visible){
 		aidnotesquantum.visible = false;
+	}
+	if (thewatch.visible){
+		thewatch.visible = false;
+		watchshowbtn.visible = true;
+	}
+	if (thehelpmenu.visible){
+		thehelpmenu.visible = false;
+	}
+	if (thehelpmenu.visible){
+		thehelpmenu.visible = false;
+	}
+}
+
+thehelpbtn.addEventListener(MouseEvent.CLICK, showHelpMenu);
+function showHelpMenu(event: MouseEvent){
+	thehelpmenu.visible = true;
+	thehelpmenu.gotoAndStop(1);
+	if (aidnotesdoctor.visible){
+		aidnotesdoctor.visible = false;
+	}
+	if (aidnotesquantum.visible){
+		aidnotesquantum.visible = false;
+	}
+	if (aidnotesstolen.visible){
+		aidnotesstolen.visible = false;
 	}
 	if (thewatch.visible){
 		thewatch.visible = false;
@@ -556,6 +588,9 @@ function showthewatch(event: MouseEvent){
 	}
 	if (aidnotesstolen.visible){
 		aidnotesstolen.visible = false;
+	}
+	if (thehelpmenu.visible){
+		thehelpmenu.visible = false;
 	}
 }
 walkiebtn.addEventListener(MouseEvent.CLICK, enablewalkie);
@@ -584,6 +619,9 @@ function changeBackgroundTo(newBackground: int){
 	mainChar.guyinside.gotoAndPlay(1);
 	mainChar.x = 980;
 	mainChar.y = 550;
+	if (thehelpmenu.visible){
+		thehelpmenu.visible = false;
+	}
 	if (newBackground == 1){
 		thebg.x = 1000;
 		thebg.y = 500;
@@ -830,6 +868,10 @@ function executeActionBubble(){
 	if (actionbubble.currentFrame == 19){
 		happenEnding(2);
 	}
+}
+
+function handleHelpMenu(){
+	1;
 }
 
 function handleTimeDisplay(){
